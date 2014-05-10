@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>DEMO</title>
+
+</head>
+<body>
+<div id="J_test" class="txt">DEMO</div>
+<div id="J_test2">DEMO2</div>
+<script src="../libs/jquery-1.11.1.js"></script>
+<script src="../src/core/core.js"></script>
+<script src="../src/core/widget.js"></script>
+<script src="../src/ui/test.js"></script>
+<script>
+    var $dom = $('#J_test');
+
+    $dom.on('testcreate',function(){
+        console.info('testcreate，实例时回调')
+    })
+
+
+
+    var t = $dom.test().data( "test" );
+
+    console.info(t)
+    console.info(Pui.pp.test('#J_test2'))
+
+
+
+</script>
+</body>
+</html>
