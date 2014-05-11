@@ -1,0 +1,27 @@
+{
+  "name": "pui",
+  "version": "0.0.1",
+  "description": "A simple ui framework based on Jquery",
+  "homepage":"http://www.paipai.com",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:baofen14787/pui.git"
+  },
+  "keywords": [
+    "ui",
+    "paipai",
+    "jquery",
+     "wedgit"
+  ],
+  "author": "hugohua",
+  "license": ["MIT"],
+  "readmeFilename": "README.md",
+  "devDependencies": {
+    "matchdep": "~0.3.0",
+    "grunt": "~0.4.1",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-uglify": "~0.2.1",
+    "grunt-contrib-yuidoc": "~0.5.2",
+    "grunt-contrib-jshint": "~0.10.0"
+  }
+}

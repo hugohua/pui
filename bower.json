@@ -1,0 +1,30 @@
+{
+  "name": "pui",
+  "version": "0.0.1",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:baofen14787/pui.git"
+    },
+  "homepage": "https://github.com/baofen14787/pui",
+  "authors": [
+    "hugo <baofen14787@gmail.com>"
+  ],
+  "description": "jquery ui widget framework",
+  "main": "dist/",
+  "keywords": [
+    "jquery",
+    "ui",
+    "widget"
+  ],
+  "license": "MIT",
+  "dependencies": {
+        "jquery": "1.11.1"
+   },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
