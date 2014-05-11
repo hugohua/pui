@@ -16,14 +16,19 @@ Pui.widget('pp.test',{
         'aa':'aa'
     },
 
+    options:{
+        'a':1,
+        'b':2
+    },
+
     _init:function(){
         console.log('create');
     },
     _create:function(){
         console.info(this,'el')
         console.info('sub')
-        this._on(this.$el,{
-            'click':function(){
+        this._on({
+            'click li':function(){
                 console.info('my click')
             }
         })

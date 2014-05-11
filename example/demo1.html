@@ -6,7 +6,10 @@
 
 </head>
 <body>
-<button id="J_test" class="txt">DEMO</button>
+<ul id="J_test" class="txt">
+    DEMO
+    <li>lili</li>
+</ul>
 <br><br>
 <button id="J_test3" class="txt">test3</button>
 <div id="J_test2">DEMO2</div>
@@ -25,8 +28,13 @@
 
 
 
-    var t = $dom.test().data( "test" );
+    var t = $dom.test({
+        'a':4,
+        'c':3
+    }).data( "ppTest" );
+    console.info(t,'ttttt')
     $('#J_test3').click(function(){
+        console.info($dom.test('option','a'))
         console.info('cancel click')
         t._off(t.$el,'click');
     })

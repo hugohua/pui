@@ -1,8 +1,4 @@
 /**
- * Created by hugohua on 14-5-10.
- */
-
-/**
  * PUI
  * @module
  */
