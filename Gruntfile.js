@@ -9,6 +9,7 @@ module.exports = function (grunt) {
 
     //define tasks
     grunt.registerTask('default', ['concat','jshint' , 'uglify', 'yuidoc'])
+    grunt.registerTask('theme',['gitclone'])
 
     var pkg = grunt.file.readJSON('package.json')
 
@@ -75,6 +76,15 @@ module.exports = function (grunt) {
                 }
             }
         },
+        //加载yuidoc theme
+        gitclone: {
+            clone: {
+                options: {
+                    repository: 'https://github.com/crossjs/yuidoc-bootstrap.git',
+                    directory: 'theme'
+                }
+            }
+        },
         //生成文档
         yuidoc: {
             compile: {
@@ -84,7 +94,7 @@ module.exports = function (grunt) {
                 url: '<%= pkg.homepage %>',
                 options: {
                     paths: 'src/',
-                    themedir: 'theme/',
+                    themedir: "yuidoc-bootstrap",
                     outdir: 'docs/'
                 }
             }
