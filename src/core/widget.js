@@ -10,10 +10,11 @@
 
     /**
      * widget工厂方法，用于创建插件
-     * @param name 包含命名空间的插件名称，格式 xx.xxx
-     * @param base 需要继承的ui组件
-     * @param prototype 插件的实际代码
-     * @returns {Function} constructor
+     * @method
+     * @param {string} name 包含命名空间的插件名称，格式 xx.xxx
+     * @param [base=Pui.Base] {object} base 需要继承的ui组件 （可选） 默认继承Pui.Base
+     * @param {object} prototype 插件的实际代码
+     * @return {Function} constructor
      */
     Pui.widget = function(name,base,prototype){
         var fullName,

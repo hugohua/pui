@@ -35,21 +35,22 @@ Pui.Base.prototype = {
     },
 
     /**
-     * 创建插件时调用
-     * @method
+     * 在页面调用widget的时候，就会执行此方法
+     * Widget的绝大大多数行为和结构都是在这里进行创建及初始化的。
+     * @method _create
      */
     _create     : $.noop,
     /**
      * 每次调用插件时会执行此方法
      * 与_create不同的是_create只调用一次，_init则在每次调用时都执行
-     * @method
+     * @method _init
      */
     _init       : $.noop,
 
     /**
      * 获取插件的dom warp
-     * @method
-     * @returns {*|jQuery|HTMLElement}
+     * @method widget
+     * @returns 当前插件的jquery dom对象
      */
     widget: function() {
         return this.$el;
@@ -61,7 +62,7 @@ Pui.Base.prototype = {
      * Thanks to jquery ui widget _trigget
      * 如$("tabs").omTabs({"change":function(){//handler}});
      * 或者$("tabs").bind("tabschange",function(){//handler});
-     * @method
+     * @method _trigger
      * @param type 事件类型
      * @param event 事件对象
      * @param data 数据
@@ -99,11 +100,10 @@ Pui.Base.prototype = {
 
     /**
      * 事件绑定
-     * @method
-     * @param suppressDisabledCheck
-     * @param element
-     * @param handlers
-     * @private
+     * @method _on
+     * @param [suppressDisabledCheck=false] {bollean} suppressDisabledCheck
+     * @param [element=this.$el] {jQuery} element
+     * @param {Object} handlers
      */
     _on: function( suppressDisabledCheck, element, handlers ) {
         var delegateElement,
@@ -158,6 +158,13 @@ Pui.Base.prototype = {
         });
     },
 
+    /**
+     * 取消事件绑定
+     * @method _off
+     * @params element
+     * @params eventName
+     * @private
+     */
     _off: function( element, eventName ) {
         eventName = (eventName || "").split( " " ).join( this.eventNamespace + " " ) + this.eventNamespace;
         element.unbind( eventName ).undelegate( eventName );

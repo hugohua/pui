@@ -3,8 +3,8 @@
  */
 
 /**
- * @module Pui
- * @type {Pui|*|{version: string}}
+ * PUI
+ * @module
  */
 var Pui = Pui || {
     version: '@version'
@@ -12,7 +12,7 @@ var Pui = Pui || {
 
 /**
  * PUI的工具处理对象
- * @Class
+ * @class
  * @type {{}|*}
  */
 Pui.utils = Pui.utils || {};
