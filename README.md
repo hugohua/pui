@@ -10,6 +10,11 @@ PUI 解决了大量基础性问题，有助于提高效率，有利于代码重�
 
 其核心代码主要参考jQuery UI的实现，其API与jquery ui 基本一致。如果你熟悉jQuery ui的使用，那么相信你会很快熟练掌握PUI
 
+1. 生成命名空间（如果需要）和属性
+2. 避免在相同元素下widget的多实例化。即同一个dom下只实例化一次，并将插件对象缓存在dom上方便后续调用。
+3. 链式的转发回调插件
+4. 限制私有方法被外界调用
+
 ###Getting Started
 
 ####创建一个插件
@@ -28,13 +33,16 @@ $('#ID').plugin();
 
 非常简单吧。
 
+###环境依赖
+* git
+* node(包括npm)
+* grunt (npm install -g grunt-cli)
+* bower (npm install -g bower)
 
-###TODO
 
-这仅仅是个开始，后续会逐步完善其功能。
+###feekback
+如果您有任何关于PUI的问题，可以通过[git issue](https://github.com/baofen14787/pui/issues)给我反馈bug，我会尽快解决。
 
-1. 通过规范的代码注释，自动生成组件说明文档。
-2. 加入组件模板及实用功能函数。
 
 ### Changelog
 * v0.1 项目创建

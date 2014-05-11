@@ -74,6 +74,7 @@ Pui.Base.prototype = {
             callback = this.options[ type ];
 
         data = data || {};
+        //将event转为jq的event对象
         event = $.Event( event );
         event.type = ( type === this.widgetEventPrefix ?
             type :
