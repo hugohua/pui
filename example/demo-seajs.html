@@ -8,27 +8,15 @@
 <body>
 <div id="J_test" class="txt">DEMO</div>
 <div id="J_test2">DEMO2</div>
-<script src="../libs/jquery-1.11.1.js"></script>
-<script src="../src/core/core.js"></script>
-<!--<script src="../src/core/base.js"></script>-->
-<script src="../src/core/widget.js"></script>
-<script src="../src/ui/test.js"></script>
+<script src="../bower_components/jquery/dist/jquery.js"></script>
+<script src="../bower_components/seajs/sea-debug.js"></script>
 <script>
-    var $dom = $('#J_test');
-
-    $dom.on('testcreate',function(){
-        console.info('testcreate，实例时回调')
+    seajs.config({
+        base    : 'http://localhost:63342/GitHub/pui/'
+    });
+    seajs.use('example/js/test',function(app){
+        app.load()
     })
-
-
-
-    var t = $dom.test().data( "test" );
-
-    console.info($dom.test())
-    console.info(Pui.pp.test('#J_test2'))
-
-
-
 </script>
 </body>
 </html>
