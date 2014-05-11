@@ -68,9 +68,11 @@ module.exports = function (grunt) {
                 banner: banner
             },
             //具体任务配置
-            files: {
-                'dist/<%= pkg.name %>.min.js': ['dist/<%= pkg.name %>.js'],
-                'dist/<%= pkg.name %>.widget.min.js':['dist/<%= pkg.name %>.widget.js']
+            dist:{
+                files: {
+                    'dist/<%= pkg.name %>.min.js': ['<%= concat.core.dest %>'],
+                    'dist/<%= pkg.name %>.widget.min.js':['<%= concat.widget.dest %>']
+                }
             }
         },
         //生成文档
