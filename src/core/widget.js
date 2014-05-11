@@ -36,7 +36,7 @@
             return !!$.data( elem, fullName );
         };
 
-        //将插件的调用方法暴露给Gui上，可统一用Gui.namespace.plugin来管理查看插件
+        //将插件的调用方法暴露给Pui上，可统一用Pui.namespace来管理查看插件
         Pui[ namespace ] = Pui[ namespace ] || {};
         //实际创建的对象为 Pui.pp.plugin
         constructor = Pui[ namespace ][ name ] = function( element,options ) {
@@ -64,7 +64,7 @@
                 proxiedPrototype[ prop ] = value;
                 return;
             }
-            //如果val是function
+            //如果val是func
             proxiedPrototype[ prop ] = (function() {
                 //两种调用父类函数的方法
                 var _super = function() {
@@ -79,7 +79,6 @@
                     var __super = this._super,
                         __superApply = this._superApply,
                         returnValue;
-//                console.log(prop, value,this,this._super,'===')
 //                debugger;
                     //在这里调用父类的函数
                     this._super = _super;
@@ -89,13 +88,12 @@
 
                     this._super = __super;
                     this._superApply = __superApply;
-//                console.log(this,value,returnValue,prop,'===')
                     return returnValue;
                 };
             })();
         });
 
-        // 给om.tabs继承父类的所有原型方法和参数
+        // 给当前插件继承父类的所有原型方法和参数
         constructor.prototype = $.extend( true, basePrototype, {
             namespace: namespace,
             widgetName: name,

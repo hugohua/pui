@@ -6,14 +6,16 @@
 
 </head>
 <body>
-<div id="J_test" class="txt">DEMO</div>
+<button id="J_test" class="txt">DEMO</button>
+<br><br>
+<button id="J_test3" class="txt">test3</button>
 <div id="J_test2">DEMO2</div>
 <script src="../bower_components/jquery/dist/jquery.js"></script>
 <script src="../src/core/core.js"></script>
 <script src="../src/core/base.js"></script>
 <script src="../src/core/widget.js"></script>
 <script src="../src/core/bridge.js"></script>
-<script src="../src/ui/test.js"></script>
+<script src="../src/widget/test.js"></script>
 <script>
     var $dom = $('#J_test');
 
@@ -24,9 +26,12 @@
 
 
     var t = $dom.test().data( "test" );
-
-    console.info($dom.test())
-    console.info(Pui.pp.test('#J_test2'))
+    $('#J_test3').click(function(){
+        console.info('cancel click')
+        t._off(t.$el,'click');
+    })
+//    console.info($dom.test())
+//    console.info(Pui.pp.test('#J_test2'))
 
 
 

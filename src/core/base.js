@@ -1,5 +1,7 @@
 /**
  * Pui插件的基类，所有基于widget创建的插件都将基础base
+ * @class Base
+ * @constructor
  */
 Pui.Base = function(){};
 Pui.Base.prototype = {
@@ -21,7 +23,8 @@ Pui.Base.prototype = {
         //转为dom对象 用于存储实例
         element = this.$el[0];
         //缓存实例，单例
-        $.data( element, this.widgetName, this );
+        $.data( element, this.widgetFullName, this );
+        this.bindings = $();
         // 开发者实现
         this._create();
         // 如果绑定了初始化的回调函数，会在这里触发。
@@ -31,14 +34,40 @@ Pui.Base.prototype = {
         this._init();
     },
 
+    /**
+     * 创建插件时调用
+     * @method
+     */
     _create     : $.noop,
+    /**
+     * 每次调用插件时会执行此方法
+     * 与_create不同的是_create只调用一次，_init则在每次调用时都执行
+     * @method
+     */
     _init       : $.noop,
 
-    // $.widget中优化过的trigger方法。可以同时调用config中的方法和bind的方法。
-    // 即可以用两个方式去给组件绑定事件。
-    // Thanks to jquery ui widget _trigget
-    // 如$("tabs").omTabs({"change":function(){//handler}});
-    // 或者$("tabs").bind("tabschange",function(){//handler});
+    /**
+     * 获取插件的dom warp
+     * @method
+     * @returns {*|jQuery|HTMLElement}
+     */
+    widget: function() {
+        return this.$el;
+    },
+
+    /**
+     * $.widget中优化过的trigger方法。可以同时调用config中的方法和bind的方法。
+     * 即可以用两个方式去给组件绑定事件。
+     * Thanks to jquery ui widget _trigget
+     * 如$("tabs").omTabs({"change":function(){//handler}});
+     * 或者$("tabs").bind("tabschange",function(){//handler});
+     * @method
+     * @param type 事件类型
+     * @param event 事件对象
+     * @param data 数据
+     * @returns {boolean}
+     * @private
+     */
     _trigger: function( type, event, data ){
         var prop, orig,
             callback = this.options[ type ];
@@ -66,5 +95,80 @@ Pui.Base.prototype = {
         return !( $.isFunction( callback ) &&
             callback.apply( this.$el[0], [ event ].concat( data ) ) === false ||
             event.isDefaultPrevented() );
+    },
+
+    /**
+     * 事件绑定
+     * @method
+     * @param suppressDisabledCheck
+     * @param element
+     * @param handlers
+     * @private
+     */
+    _on: function( suppressDisabledCheck, element, handlers ) {
+        var delegateElement,
+            instance = this;
+
+        // no suppressDisabledCheck flag, shuffle arguments
+        if ( typeof suppressDisabledCheck !== "boolean" ) {
+            handlers = element;
+            element = suppressDisabledCheck;
+            suppressDisabledCheck = false;
+        }
+
+        // no element argument, shuffle and use this.element
+        if ( !handlers ) {
+            handlers = element;
+            element = this.element;
+            delegateElement = this.widget();
+        } else {
+            // accept selectors, DOM elements
+            element = delegateElement = $( element );
+            this.bindings = this.bindings.add( element );
+        }
+
+        $.each( handlers, function( event, handler ) {
+            function handlerProxy() {
+                // allow widgets to customize the disabled handling
+                // - disabled as an array instead of boolean
+                // - disabled class as method for disabling individual parts
+                if ( !suppressDisabledCheck &&
+                    ( instance.options.disabled === true ||
+                        $( this ).hasClass( "ui-state-disabled" ) ) ) {
+                    return;
+                }
+                return ( typeof handler === "string" ? instance[ handler ] : handler )
+                    .apply( instance, arguments );
+            }
+
+            // copy the guid so direct unbinding works
+            if ( typeof handler !== "string" ) {
+                handlerProxy.guid = handler.guid =
+                    handler.guid || handlerProxy.guid || $.guid++;
+            }
+
+            var match = event.match( /^([\w:-]*)\s*(.*)$/ ),
+                eventName = match[1] + instance.eventNamespace,
+                selector = match[2];
+            if ( selector ) {
+                delegateElement.delegate( selector, eventName, handlerProxy );
+            } else {
+                element.bind( eventName, handlerProxy );
+            }
+        });
+    },
+
+    _off: function( element, eventName ) {
+        eventName = (eventName || "").split( " " ).join( this.eventNamespace + " " ) + this.eventNamespace;
+        element.unbind( eventName ).undelegate( eventName );
+    },
+
+    /**
+     * 将模板转为html
+     */
+    tpl2html :function(){
+        var tpl = this.template;
+        console.info(tpl,'tpl')
     }
+
 };
