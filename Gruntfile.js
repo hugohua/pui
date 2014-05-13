@@ -10,6 +10,7 @@ module.exports = function (grunt) {
     //define tasks
     grunt.registerTask('default', ['concat','jshint' , 'uglify', 'yuidoc'])
     grunt.registerTask('theme',['gitclone'])
+    grunt.registerTask('office', ['concat', 'uglify', 'copy'])
 
     var pkg = grunt.file.readJSON('package.json')
 
@@ -54,7 +55,7 @@ module.exports = function (grunt) {
                 banner: banner
             },
             core: {
-                src: ['src/core/intro.js', 'src/core/core.js', 'src/core/widget.js', 'src/core/base.js', 'src/core/bridge.js', 'src/core/outro.js'],
+                src: ['src/core/intro.js', 'src/core/core.js','src/core/utils.js', 'src/core/widget.js', 'src/core/base.js', 'src/core/bridge.js', 'src/core/outro.js'],
                 dest: 'dist/<%= pkg.name %>.js'
             },
             widget: {
@@ -74,6 +75,15 @@ module.exports = function (grunt) {
                     'dist/<%= pkg.name %>.min.js': ['<%= concat.core.dest %>'],
                     'dist/<%= pkg.name %>.widget.min.js':['<%= concat.widget.dest %>']
                 }
+            }
+        },
+        //办公环境下copy
+        copy: {
+            main: {
+                files: [
+                    // includes files within path
+                    {expand: true,flatten: true,  src: ['dist/**'], dest: 'E:/ecc_UEDFD_rep/paipai/base/js/libs', filter: 'isFile'}
+                ]
             }
         },
         //加载yuidoc theme

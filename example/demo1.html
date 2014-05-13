@@ -15,6 +15,7 @@
 <div id="J_test2">DEMO2</div>
 <script src="../bower_components/jquery/dist/jquery.js"></script>
 <script src="../src/core/core.js"></script>
+<script src="../src/core/utils.js"></script>
 <script src="../src/core/base.js"></script>
 <script src="../src/core/widget.js"></script>
 <script src="../src/core/bridge.js"></script>
@@ -27,6 +28,10 @@
     })
 
 
+    var compiled = Pui.tmpl("hello: <%= name %>");
+    console.log(compiled({name: 'moe'}));
+
+    console.log(Pui.tmpl("Hello, <%= name %>", { name: "Jack" }));
 
     var t = $dom.test({
         'a':4,

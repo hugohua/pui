@@ -2,16 +2,16 @@
  * PUI
  * @module
  */
-var Pui = Pui || {
-    version: '@version'
+var Pui = {
+    version: '0.0.1'
 };
 
-/**
- * PUI的工具处理对象
- * @class
- * @type {{}|*}
- */
-Pui.utils = Pui.utils || {};
+Pui.mix = function(to, from) {
+    for (var i in from) {
+        to[i] = from[i];
+    }
+    return to;
+};
 
 
 
