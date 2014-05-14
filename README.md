@@ -33,6 +33,20 @@ $('#ID').plugin();
 
 非常简单吧。
 
+####创建一个页面模块
+```js
+Pui.add('page',function(p){
+    //p是对外接口
+    p.init = function(){
+        //this指向Pui
+        this.aa();
+    }
+})
+
+//如何访问
+Pui.page.init();
+```
+
 ###环境依赖
 * git
 * node(包括npm)

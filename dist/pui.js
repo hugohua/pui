@@ -8,7 +8,7 @@
  *
  * Licensed under MIT
  *
- * Released on: May 13, 2014
+ * Released on: May 14, 2014
 */
 (function(global,$){
     //防止重复加载
@@ -35,6 +35,28 @@ Pui.mix(Pui,{
     $win:$(window),
 
     $doc:$(document),
+
+    add:function(name,func){
+        var o = {};
+        if(typeof name !== 'string'){
+            $.error(name + '必须是个字符串！')
+            return;
+        }
+//        if(this[name]){
+//            $.error(name + '已经存在，存在冲突，请修改命名')
+//        }
+        //如果之前就有这个对象 就直接合并
+        this[name] = this[name] || {};
+        func.call(this,o)
+        for(var i in o){
+            this[name][i] = o[i];
+            //如果有init的话 就立即执行
+            if(i === 'init'){
+                o[i]();
+            }
+        }
+        o = null;
+    },
 
     /**
      * 检测浏览器是否支持css属性
@@ -216,9 +238,8 @@ Pui.mix(Pui,{
 
 /*!
  Underscore.js templates as a standalone implementation.
- JavaScript micro-templating, similar to John Resig's implementation.
  Underscore templates documentation: http://documentcloud.github.com/underscore/#template
- Modifyed by Martin Lundgren
+ Modifyed by hugohua
  */
 (function () {
 
