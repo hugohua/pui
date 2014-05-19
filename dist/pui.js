@@ -8,7 +8,7 @@
  *
  * Licensed under MIT
  *
- * Released on: May 14, 2014
+ * Released on: May 19, 2014
 */
 (function(global,$){
     //防止重复加载
@@ -36,25 +36,41 @@ Pui.mix(Pui,{
 
     $doc:$(document),
 
+    /**
+     * 页面模块
+     * @param name
+     * @param func 公共方法
+     */
     add:function(name,func){
-        var o = {};
+        var o = {},
+            namespace;
         if(typeof name !== 'string'){
             $.error(name + '必须是个字符串！')
             return;
         }
-//        if(this[name]){
-//            $.error(name + '已经存在，存在冲突，请修改命名')
-//        }
+        //判断是否存在命名空间
+        if(name.indexOf('.') !== -1){
+            namespace = name.split( "." )[ 0 ];
+            name = name.split(".")[ 1 ];
+        }else{
+            //不存在命名空间的话
+            namespace = name;
+        }
+
         //如果之前就有这个对象 就直接合并
-        this[name] = this[name] || {};
-        func.call(this,o)
+        //this指向Pui
+        this[namespace] = this[namespace] || {};
+        //name
+        this[namespace][name] = this[namespace][name] || {};
+        func.call(this,o);
         for(var i in o){
-            this[name][i] = o[i];
+            this[namespace][name][i] = o[i];
             //如果有init的话 就立即执行
             if(i === 'init'){
                 o[i]();
             }
         }
+        //断开引用 回收内存
         o = null;
     },
 
