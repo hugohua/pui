@@ -1,12 +1,12 @@
-#Pui.widget( name [, base ], prototype )
+# Pui.widget( name [, base ], prototype )
 
-###API参考
+### API参考
 
 http://api.jqueryui.com/jquery.widget/
 
 widget 提供了一个创建jQ组件的方法，通过Pui.widget("pp.plugin",{}) 创建的组件，PUI会自动桥接成 $("#id").plugin() 的模式调用
 
-##widget 基础模板
+## widget 基础模板
 
 ```js
 
@@ -88,7 +88,7 @@ t.pubFunc();
 $(':pp-template') //表示选中所有具有template对象的dom节点
 ```
 
-##原理
+## 原理
 
 上面的例子，通过Pui.widget()创建的插件，实际上是创建了 Pui.pp.template 对象。
 

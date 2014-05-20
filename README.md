@@ -54,6 +54,19 @@ Pui.page.init();
 * bower (npm install -g bower)
 
 
+### API参考
+
+组件类：
+ [Pui.widget](https://github.com/baofen14787/pui/issues/1)
+
+实用方法集:
+1. [tmpl](https://github.com/baofen14787/pui/issues/2)
+2. supports
+3. debounce
+4. throttle
+5. detector
+6. loadImg
+
 ###feekback
 如果您有任何关于PUI的问题，可以通过[git issue](https://github.com/baofen14787/pui/issues)给我反馈bug，我会尽快解决。
 

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>DEMO</title>
+    <style>
+        .outer {
+            border-collapse: collapse;
+            font: 12px/16px arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+        }
+
+        div.outer {
+            border-top: solid 1px #ddd;
+            border-left: solid 1px #ddd;
+        }
+
+        div.outer p {
+            clear: left;
+        }
+
+        .outer td, .outer th {
+            border: solid 1px #ddd;
+            margin: 0;
+            padding: 5px;
+        }
+
+        .outer div {
+            border-right: solid 1px #ddd;
+            border-bottom: solid 1px #ddd;
+            float: left;
+            margin: 0;
+            padding: 5px;
+        }
+
+        .outer th, .outer div.th {
+            background: #eee;
+            font-weight: bold;
+        }
+
+        .outer div:nth-child(odd) {
+            width: 20px;
+        }
+
+        .outer div:nth-child(even) {
+            width: 50px;
+        }
+
+        .outer div:nth-child(2n+1) {
+            clear: left;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<table class="outer">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+
+
+<script type="text/html" id='table-data'>
+
+    <% $.each(items,function(key,data){ %>
+    <tr>
+        <td><%= key %></td>
+        <td><%= data.name %></td>
+    </tr>
+    <% }) %>
+
+</script>
+
+
+
+<script src="../bower_components/jquery/dist/jquery.js"></script>
+<script src="../src/core/core.js"></script>
+<script src="../src/core/utils.js"></script>
+<script src="../src/core/base.js"></script>
+<script src="../src/core/widget.js"></script>
+<script src="../src/core/bridge.js"></script>
+<script src="../src/widget/test.js"></script>
+<script>
+    var items = [
+        {name:"Nick"},
+        {name:"Lee"},
+        {name:"Jenny"},
+        {name:"Julie"},
+        {name:"Dennis"},
+        {name:"Shawn"},
+        {name:"Justin"},
+        {name:"Scott"},
+        {name:"John"},
+        {name:"Sherell"},
+        {name:"Janie"},
+        {name:"Graham"},
+        {name:"Erica"}
+    ];
+
+    var tableTemplate = $("#table-data").html();
+
+    $("table.outer tbody").html(Pui.tmpl(tableTemplate,{items:items}));
+
+
+
+</script>
+</body>
+</html>
