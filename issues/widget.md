@@ -90,7 +90,7 @@ $(':pp-template') //表示选中所有具有template对象的dom节点
 
 ## 关于事件绑定
 
-#### _on
+#### _on( [suppressDisabledCheck ] [, element ], handlers )
 
 Pui Base类里面的 _on 事件对jquery的on做了进一步封装。
 
@@ -98,7 +98,6 @@ Pui Base类里面的 _on 事件对jquery的on做了进一步封装。
 1.  保持事件内的this指向，this始终指向插件本身。
 2.  通过_on绑定会自动添加命名空间，防止事件相互干扰。如 _on('click') 实际上就是 _on(click.plugin)
 
-<code>_on( [suppressDisabledCheck ] [, element ], handlers )</code>
 
 参数说明：
 
