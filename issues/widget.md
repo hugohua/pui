@@ -88,6 +88,46 @@ t.pubFunc();
 $(':pp-template') //表示选中所有具有template对象的dom节点
 ```
 
+## 关于事件绑定
+
+#### _on
+
+Pui Base类里面的 _on 事件对jquery的on做了进一步封装。
+
+在插件内使用_on绑定有2个好处：
+1.  保持事件内的this指向，this始终指向插件本身。
+2.  通过_on绑定会自动添加命名空间，防止事件相互干扰。如 _on('click') 实际上就是 _on(click.plugin)
+
+<code>_on( [suppressDisabledCheck ] [, element ], handlers )</code>
+
+参数说明：
+
+*  suppressDisabledCheck: (string) 默认值：false 。是否要绕过禁用的检查
+*  element: (jq object) 默认值：this.$el 。要绑定事件处理程序的元素。
+*  handlers: (object) 一个 map，其中字符串键代表事件类型，可选的选择器用于授权，值代表事件调用的处理函数。
+
+栗子:
+```js
+//给插件内所有a标签绑定click事件
+this._on({
+  "click a": function( event ) {
+    event.preventDefault();
+  }
+});
+
+
+//给window绑定resize和scroll事件
+this._on(this.$win,{
+    'resize':function(){},
+    'scroll':function(){}
+})
+
+//给插件内的li绑定mouseenter事件
+this._on(this.$el.find('li'),{
+    'mouseenter':function(){}
+})
+```
+
 ## 原理
 
 上面的例子，通过Pui.widget()创建的插件，实际上是创建了 Pui.pp.template 对象。
