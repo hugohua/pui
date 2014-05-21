@@ -9,8 +9,9 @@ module.exports = function (grunt) {
 
     //define tasks
     //暂时去掉'jshint' ,模板编译不过。。囧
-    grunt.registerTask('default', ['concat', 'uglify', 'yuidoc'])
-    grunt.registerTask('theme',['gitclone'])
+    grunt.registerTask('default', ['concat', 'uglify'])
+//    删除yuidoc
+//    grunt.registerTask('theme',['gitclone'])
     grunt.registerTask('office', ['concat', 'uglify', 'copy'])
 
     var pkg = grunt.file.readJSON('package.json')
