@@ -8,7 +8,7 @@
  *
  * Licensed under MIT
  *
- * Released on: May 20, 2014
+ * Released on: May 21, 2014
 */
 (function(global,$){
     //防止重复加载
@@ -42,36 +42,33 @@ Pui.mix(Pui,{
      * @param func 公共方法
      */
     add:function(name,func){
-        var o = {},
-            namespace;
+        var exports = {},
+            returnVal;
         if(typeof name !== 'string'){
             $.error(name + '必须是个字符串！')
             return;
         }
-        //判断是否存在命名空间
-        if(name.indexOf('.') !== -1){
-            namespace = name.split( "." )[ 0 ];
-            name = name.split(".")[ 1 ];
-        }else{
-            //不存在命名空间的话
-            namespace = name;
-        }
+
 
         //如果之前就有这个对象 就直接合并
-        //this指向Pui
-        this[namespace] = this[namespace] || {};
         //name
-        this[namespace][name] = this[namespace][name] || {};
-        func.call(this,o);
-        for(var i in o){
-            this[namespace][name][i] = o[i];
+        this[name] = this[name] || {};
+        //将func里面的export参数抽取出来，用于合并到Pui命名空间上
+        //同时判断是否存在return值
+        returnVal = func(exports,this);
+        //判断返回值是否是对象
+        if(returnVal && $.isPlainObject(returnVal)){
+            $.extend(exports,returnVal);
+        }
+        for(var i in exports){
+            this[name][i] = exports[i];
             //如果有init的话 就立即执行
             if(i === 'init'){
-                o[i]();
+                exports[i]();
             }
         }
         //断开引用 回收内存
-        o = null;
+        exports = null;
     },
 
     /**
