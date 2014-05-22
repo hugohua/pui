@@ -1,10 +1,10 @@
 # `Pui.add(name,func)`
 
-用来定义模块。Pui 推荐一个模块一个文件，虽然目前尚未实现seajs、requireJs的按需加载，但是遵循统一的规范有利于团队代码的统一
+用来定义模块。`Pui` 推荐一个模块一个文件，虽然目前尚未实现seajs、requireJs的按需加载，但是遵循统一的规范有利于团队代码的统一
 
 ### *参数*
 
-*  `name {String}` 页面模块名称，该名称具有唯一性，通过add方法创建的模块会自动挂载自`Pui[name]`上。
+*  `name {String}` 页面模块名称，该名称具有唯一性，通过`add`方法创建的模块会自动挂载自`Pui[name]`上。
 *  `func {Function}` 页面模块的处理逻辑函数。`func`有两个参数`exports`、`P`
 
 
@@ -37,9 +37,9 @@ Pui.add('page1',function(exports,P){
 })
 ```
 
-说明：`init` 、 `lazyInit` 、 `winLoad` 是add方法内提供的3种初始化方式。合理的安排初始化时间，能防止函数同一时间执行而引起的CPU突然暴增，及页面加载瞬间卡顿等问题。
+说明：`init` 、 `lazyInit` 、 `winLoad` 是`add`方法内提供的3种初始化方式。合理的安排初始化时间，能防止函数同一时间执行而引起的CPU突然暴增，及页面加载瞬间卡顿等问题。
 
-通过exports 添加的方法会自动挂载自 Pui.page1对象下面
+通过`exports` 添加的方法会自动挂载自 `Pui[name]`对象下面
 
 ### 范例二
 ```js
@@ -56,5 +56,5 @@ Pui.add('page1',function(){
 })
 ```
 
-通过return的方式将对象暴露给外界调用。
+通过`return`的方式将对象暴露给外界调用。
 
