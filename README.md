@@ -57,12 +57,12 @@ Pui.page.init();
 ### API
 
 组件类：
- [Pui.widget](https://github.com/baofen14787/pui/issues/1)
+ [Pui.widget](https://github.com/baofen14787/pui/blob/master/docs/widget.md)
 
 实用方法集:
 
 *  [add](https://github.com/baofen14787/pui/blob/master/docs/add.md) (模块定义方法)
-*  [tmpl](https://github.com/baofen14787/pui/issues/2) (模板方法)
+*  [tmpl](https://github.com/baofen14787/pui/blob/master/docs/temlate.md) (模板方法)
 *  supports (检测浏览器是否支持css属性)
 *  debounce (当该函数被调用，wait毫秒后才执行)
 *  throttle (无视一定时间内所有的调用)
