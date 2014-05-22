@@ -4,8 +4,8 @@
 
 ### *参数*
 
-  `name {String}` 页面模块名称，该名称具有唯一性，通过add方法创建的模块会自动挂载自`Pui[name]`上。
-  `func {Function}` 页面模块的处理逻辑函数。`func`有两个参数`exports`、`P`
+*  `name {String}` 页面模块名称，该名称具有唯一性，通过add方法创建的模块会自动挂载自`Pui[name]`上。
+*  `func {Function}` 页面模块的处理逻辑函数。`func`有两个参数`exports`、`P`
 
 
 ### 最佳实践（范例）
