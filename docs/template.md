@@ -1,12 +1,12 @@
-# Pui.tmpl(templateString, [data], [settings])
+# `Pui.tmpl(templateString, [data], [settings])`
 
 ### API参考
 
-templateString : 模板文本，
+* `templateString {String}` : 模板文本，
 
-data : 模板数据
+* `data {Object}` : 模板数据
 
-settings : 基本配置信息，一般不予传递
+* `settings {Object}` : 基本配置信息，一般不予传递
 
 
 [underscore.js template](http://www.css88.com/doc/underscore/#template)
