@@ -28,21 +28,39 @@
     })
 
 
-    var compiled = Pui.tmpl("hello: <%= name %>");
-    console.log(compiled({name: 'moe'}));
-
-    console.log(Pui.tmpl("Hello, <%= name %>", { name: "Jack" }));
+//    var compiled = Pui.tmpl("hello: <%= name %>");
+//    console.log(compiled({name: 'moe'}));
+//
+//    console.log(Pui.tmpl("Hello, <%= name %>", { name: "Jack" }));
 
     var t = $dom.test({
         'a':4,
         'c':3
     }).data( "ppTest" );
-    console.info(t,'ttttt')
+//    console.info(t,'ttttt')
     $('#J_test3').click(function(){
         console.info($dom.test('option','a'))
         console.info('cancel click')
         t._off(t.$el,'click');
     })
+
+    Pui.add('name',function(P){
+        this.tmpl();
+        this.aa = function(a,b){
+            console.info(a,b,'ab')
+        }
+        P.load = function(){
+            console.info('load')
+        }
+
+        P.abc = 'abc';
+
+        P.init = function(){
+            console.info('aaa',$)
+        }
+        console.info(P,'===========')
+    })
+    console.info(Pui.name.abc)
 //    console.info($dom.test())
 //    console.info(Pui.pp.test('#J_test2'))
 
