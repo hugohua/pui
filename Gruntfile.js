@@ -57,7 +57,7 @@ module.exports = function (grunt) {
                 banner: banner
             },
             core: {
-                src: ['src/core/intro.js', 'src/core/core.js','src/core/utils.js', 'src/core/widget.js', 'src/core/base.js', 'src/core/bridge.js', 'src/core/outro.js','src/extend/*.js'],
+                src: ['src/core/intro.js', 'src/core/core.js','src/core/utils.js', 'src/core/widget.js', 'src/core/base.js', 'src/core/bridge.js', 'src/core/outro.js'],
                 dest: 'dist/<%= pkg.name %>.js'
             },
             widget: {

@@ -8,11 +8,21 @@
  *
  * Licensed under MIT
  *
- * Released on: May 21, 2014
+ * Released on: May 22, 2014
 */
-(function(global,$){
+
+(function(window){
+    window.rAF = window.requestAnimationFrame	||
+    window.webkitRequestAnimationFrame	||
+    window.mozRequestAnimationFrame		||
+    window.oRequestAnimationFrame		||
+    window.msRequestAnimationFrame		||
+    function (callback) { window.setTimeout(callback, 1000 / 60); }
+})(window);
+
+(function(window,$){
     //防止重复加载
-    if (global.Pui) {
+    if (window.Pui) {
         return
     }
 
@@ -43,7 +53,8 @@ Pui.mix(Pui,{
      */
     add:function(name,func){
         var exports = {},
-            returnVal;
+            returnVal,
+            me = this;
         if(typeof name !== 'string'){
             $.error(name + '必须是个字符串！')
             return;
@@ -52,19 +63,24 @@ Pui.mix(Pui,{
 
         //如果之前就有这个对象 就直接合并
         //name
-        this[name] = this[name] || {};
+        me[name] = me[name] || {};
         //将func里面的export参数抽取出来，用于合并到Pui命名空间上
         //同时判断是否存在return值
-        returnVal = func(exports,this);
+        returnVal = func(exports,me);
         //判断返回值是否是对象
         if(returnVal && $.isPlainObject(returnVal)){
             $.extend(exports,returnVal);
         }
         for(var i in exports){
-            this[name][i] = exports[i];
+            me[name][i] = exports[i];
             //如果有init的话 就立即执行
             if(i === 'init'){
                 exports[i]();
+            }else if(i === 'lazyInit'){
+                //1.5s后执行
+                setTimeout(function(){
+                    me[name][i]();
+                },1500)
             }
         }
         //断开引用 回收内存
@@ -235,13 +251,13 @@ Pui.mix(Pui,{
     },
 
     /**
-     * 懒加载容器内的Image
+     * 懒加载容器内的Image iframe等
      * @param $warp 容器
      */
-    loadImg:function($warp){
-        var $images = $warp.find('img[data-src]');
-        if(!$images.length) return;
-        $images.each(function(){
+    loadAsset:function($warp){
+        var $asset = $warp.find('[data-src]');
+        if(!$asset.length) return;
+        $asset.each(function(){
             var $this = $(this),
                 src = $this.attr('data-src');
             $this.attr('src',src).removeAttr('data-src');
@@ -788,7 +804,7 @@ Pui.bridge = function(name, object){
 
 };
 
-this.Pui = Pui;
+window.Pui = Pui;
 //添加CMD支持 for seajs
 if(typeof define === "function"){
     define(function(require, exports, module){
@@ -797,65 +813,4 @@ if(typeof define === "function"){
 }
 
 //this is window
-})(this,jQuery);
-(function($,P){
-    var detector = P.detector(),
-        ltie8 = detector.browser === 'ie' && detector.version && detector.version < 9;  //小于等于ie8
-    /**
-     * 添加头标签
-     */
-    var browserCheck = function(){
-        var css3 = P.supports("Transition") ? "transitions": "notransitions",
-            css3 = P.supports("animation") ? css3 + " animations": css3 + " noanimations",
-            version = detector.version ? 'ie'+ detector.version : '';
-        $("html").addClass( css3 + " " + detector.os + " " + detector.engine + " " + detector.browser + " " + version);
-    };
-
-    /**
-     * 宽窄版
-     */
-    var mediaCheck = function(){
-        var $body = $('body'),
-            old  = 1;       //1是宽版 2是窄版
-        //ie 8 以下
-        //
-        var _media = function() {
-            var isMini = (document.documentElement.clientWidth || document.body.clientWidth) < 1190;
-            if( isMini && (old === 1) ){
-                old = 2;
-                ltie8 && $body.addClass("p_mini");
-                $body.trigger('resizebody',['mini']);
-            }else if (!isMini && (old === 2)){
-                old = 1;
-                ltie8 && $body.removeClass("p_mini");
-                $body.trigger('resizebody',['normal']);
-            }
-        };
-        ltie8 && _media();
-        P.$win.on("resize.global", P.throttle(function(){_media()},500))
-    };
-
-    /**
-     * IE6 给背景图标添加缓存 避免图片重复加载
-     */
-    var bgCacheForIe6 = function(){
-        if (detector.version < 7) {
-            try {
-                document.execCommand("BackgroundImageCache", false, true);
-            } catch(e) {}
-        }
-    }
-
-    var init = function(){
-        browserCheck();
-        //如果没有宽窄版则不执行宽窄版代码
-        !window.noMini && mediaCheck();
-        bgCacheForIe6();
-    };
-
-    init();
-
-})(jQuery,Pui);
-
-
-
+})(window,jQuery);

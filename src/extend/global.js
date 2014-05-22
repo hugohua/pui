@@ -5,6 +5,18 @@
  $Date:: 2014-31-07 16:31#$
  ========================================================================*/
 
+/**
+ * 安全的使用console
+ */
+(function () {
+    var f = function () {};
+    if (!window.console) {
+        window.console = {
+            log:f, info:f, warn:f, debug:f, error:f
+        };
+    }
+}());
+
 (function($,P){
     var detector = P.detector(),
         ltie8 = detector.browser === 'ie' && detector.version && detector.version < 9;  //小于等于ie8

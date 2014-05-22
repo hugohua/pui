@@ -1,5 +1,5 @@
 
-this.Pui = Pui;
+window.Pui = Pui;
 //添加CMD支持 for seajs
 if(typeof define === "function"){
     define(function(require, exports, module){
@@ -8,4 +8,4 @@ if(typeof define === "function"){
 }
 
 //this is window
-})(this,jQuery);
+})(window,jQuery);

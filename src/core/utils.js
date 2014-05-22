@@ -18,7 +18,8 @@ Pui.mix(Pui,{
      */
     add:function(name,func){
         var exports = {},
-            returnVal;
+            returnVal,
+            me = this;
         if(typeof name !== 'string'){
             $.error(name + '必须是个字符串！')
             return;
@@ -27,19 +28,24 @@ Pui.mix(Pui,{
 
         //如果之前就有这个对象 就直接合并
         //name
-        this[name] = this[name] || {};
+        me[name] = me[name] || {};
         //将func里面的export参数抽取出来，用于合并到Pui命名空间上
         //同时判断是否存在return值
-        returnVal = func(exports,this);
+        returnVal = func(exports,me);
         //判断返回值是否是对象
         if(returnVal && $.isPlainObject(returnVal)){
             $.extend(exports,returnVal);
         }
         for(var i in exports){
-            this[name][i] = exports[i];
+            me[name][i] = exports[i];
             //如果有init的话 就立即执行
             if(i === 'init'){
                 exports[i]();
+            }else if(i === 'lazyInit'){
+                //1.5s后执行
+                setTimeout(function(){
+                    me[name][i]();
+                },1500)
             }
         }
         //断开引用 回收内存
@@ -210,13 +216,13 @@ Pui.mix(Pui,{
     },
 
     /**
-     * 懒加载容器内的Image
+     * 懒加载容器内的Image iframe等
      * @param $warp 容器
      */
-    loadImg:function($warp){
-        var $images = $warp.find('img[data-src]');
-        if(!$images.length) return;
-        $images.each(function(){
+    loadAsset:function($warp){
+        var $asset = $warp.find('[data-src]');
+        if(!$asset.length) return;
+        $asset.each(function(){
             var $this = $(this),
                 src = $this.attr('data-src');
             $this.attr('src',src).removeAttr('data-src');
