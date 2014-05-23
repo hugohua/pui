@@ -78,14 +78,19 @@ Pui.mix(Pui,{
                 exports[i]();
             }else if(i === 'lazyInit'){
                 //1.5s后执行
-                setTimeout(function(){
-                    me[name][i]();
-                },1500)
+                (function(i){
+                    setTimeout(function(){
+                        me[name][i]();
+                    },1500)
+                })(i);
             }else if(i === 'winLoad'){
                 //win load 后执行
-                me.$win.load(function(){
-                    me[name][i]();
-                })
+                (function(i){
+                    me.$win.load(function(){
+                        me[name][i]();
+                    })
+                })(i);
+
             }
         }
         //断开引用 回收内存
