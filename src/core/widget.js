@@ -95,7 +95,7 @@
         });
 
         // 给当前插件继承父类的所有原型方法和参数
-        constructor.prototype = $.extend( true, {}, basePrototype, {
+        constructor.prototype = $.extend( true,{}, basePrototype, {
             namespace: namespace,
             widgetName: name,
             widgetFullName: fullName,
