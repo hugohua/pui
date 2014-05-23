@@ -8,7 +8,7 @@
  *
  * Licensed under MIT
  *
- * Released on: May 22, 2014
+ * Released on: May 23, 2014
 */
 
 (function(window){
@@ -56,7 +56,7 @@ Pui.mix(Pui,{
             returnVal,
             me = this;
         if(typeof name !== 'string'){
-            $.error(name + '必须是个字符串！')
+            $.error(name + '必须是个字符串！');
             return;
         }
 
@@ -78,9 +78,19 @@ Pui.mix(Pui,{
                 exports[i]();
             }else if(i === 'lazyInit'){
                 //1.5s后执行
-                setTimeout(function(){
-                    me[name][i]();
-                },1500)
+                (function(i){
+                    setTimeout(function(){
+                        me[name][i]();
+                    },1500)
+                })(i);
+            }else if(i === 'winLoad'){
+                //win load 后执行
+                (function(i){
+                    me.$win.load(function(){
+                        me[name][i]();
+                    })
+                })(i);
+
             }
         }
         //断开引用 回收内存
@@ -170,11 +180,130 @@ Pui.mix(Pui,{
         };
     },
 
+
     /**
-     * 客户端信息检测
-     * @returns {{os, browser, engine, version}}
+     * 懒加载容器内的Image iframe等
+     * @param $warp 容器
      */
-    detector:function(){
+    loadAsset:function($warp){
+        var $asset = $warp.find('[data-src]');
+        if(!$asset.length) return;
+        $asset.each(function(){
+            var $this = $(this),
+                src = $this.attr('data-src');
+            $this.attr('src',src).removeAttr('data-src');
+        })
+    },
+
+    /**
+     * 获取cookie
+     * @param name
+     * @returns {string}
+     */
+    getCookie : function(name) {
+        //读取COOKIE
+        var reg = new RegExp("(^| )" + name + "(?:=([^;]*))?(;|$)"), val = document.cookie.match(reg);
+        return val ? (val[2] ? unescape(val[2]) : "") : "";
+    },
+
+    /**
+     * 设置cookie
+     * @param name {string} cookie名称
+     * @param v {string} Cookie值
+     * @param path {string} cookie 路径，默认为网站根目录
+     * @param expire {Date} 过期时间截
+     * @param domain {string} cookie作用的域名，一般用于二级域名获取cookie
+     */
+    setCookie : function(name, v, path, expire, domain) {
+        var s = name + "=" + escape(v)
+            + "; path=" + ( path || '/' ) // 默认根目录
+            + (domain ? ("; domain=" + domain) : '');
+        if (expire > 0) {
+            var d = new Date();
+            d.setTime(d.getTime() + expire * 1000);
+            s += ";expires=" + d.toGMTString();
+        }
+        document.cookie = s;
+    },
+
+    /**
+     * 删除cookie
+     * @param name {string} cookie名称
+     * @param domain {string} cookie作用的域名
+     */
+    delCookie : function(name, domain) {
+        document.cookie = name + "=;path=/;" +(domain ? ("domain=" + domain + ";") : '') +"expires=" + (new Date(0)).toGMTString();
+    }
+
+});
+
+/***
+ * Module based on jquery plugin from http://www.stoimen.com/blog/2010/02/26/jquery-localstorage-plugin-alpha
+ * localStorage类，支持object，number类型
+ */
+(function(P){
+    var ls = null,
+        hasJSON = (typeof JSON !== 'undefined');
+
+    if (typeof localStorage !== 'undefined') {
+        ls = localStorage;
+    }
+
+    P.setLocalStore = function(key, value, lifetime) {
+        if (!ls || !P.canStoreLocalStore(value)) return false;
+
+        var time = new Date();
+        if (typeof lifetime === 'undefined') lifetime = 24*60*60*1000;  //默认是1天
+        lifetime = lifetime * 24 * 60 * 60 * 1000;
+        ls.setItem(key, JSON.stringify(value));
+        ls.setItem('meta_ct_'+ key, time.getTime());
+        ls.setItem('meta_lt_'+ key, lifetime);
+        return true;
+    };
+
+    P.getLocalStore  = function(key) {
+        if (!ls) return false;
+        var time = new Date();
+        if (time.getTime() - ls.getItem('meta_ct_'+key) > ls.getItem('meta_lt_'+key)) {
+            P.removeItem(key);
+            return null;
+        }
+        return JSON.parse(ls.getItem(key));
+    };
+
+    P.removeLocalStore  = function(key) {
+        if (!ls) return false;
+
+        ls.removeItem(key);
+        ls.removeItem('meta_ct_'+key);
+        ls.removeItem('meta_lt_'+key);
+        return true;
+    };
+
+    P.canStoreLocalStore  = function(value) {
+        switch (typeof value) {
+            case 'string':
+            case 'number':
+                return true;
+        }
+        if (!hasJSON) {
+            console && console.warn('localStore cannot serialise object data.');
+        }
+        return hasJSON;
+    };
+
+    P.clearLocalStore = function(){
+        ls.clear();
+    }
+})(Pui);
+
+/**
+ * 客户端信息检测
+ * @returns {{os, browser, engine, version}}
+ */
+(function(P){
+
+    var detector = function(){
         var ua = navigator.userAgent.toLowerCase(),
             re_msie = /\b(?:msie |ie |trident\/[0-9].*rv[ :])([0-9.]+)/;
 
@@ -248,29 +377,25 @@ Pui.mix(Pui,{
             //只有IE才检测版本，否则意义不大
             version:re_msie.test(ua) ? detect(IE,ua) : ''
         };
-    },
+    };
 
-    /**
-     * 懒加载容器内的Image iframe等
-     * @param $warp 容器
-     */
-    loadAsset:function($warp){
-        var $asset = $warp.find('[data-src]');
-        if(!$asset.length) return;
-        $asset.each(function(){
-            var $this = $(this),
-                src = $this.attr('data-src');
-            $this.attr('src',src).removeAttr('data-src');
-        })
+    var det = detector();
+
+    P.detector = {
+        os : det.os,
+        engine : det.engine,
+        browser : det.browser,
+        version: det.version
     }
-});
+
+})(Pui);
 
 /*!
  Underscore.js templates as a standalone implementation.
  Underscore templates documentation: http://documentcloud.github.com/underscore/#template
  Modifyed by hugohua
  */
-(function () {
+(function (P) {
 
     // By default, Underscore uses ERB-style template delimiters, change the
     // following template settings to use alternative delimiters.
@@ -307,7 +432,7 @@ Pui.mix(Pui,{
         return '\\' + escapes[match];
     };
 
-    Pui.tmpl = function(text, data, settings) {
+    P.tmpl = function(text, data, settings) {
         settings = $.extend({}, settings, templateSettings);
 
         // Combine delimiters into one regular expression via alternation.
@@ -363,7 +488,7 @@ Pui.mix(Pui,{
         return template;
     };
 
-}());
+}(Pui));
 var widget_uuid = 0,
         widget_slice = [].slice;
 

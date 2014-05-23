@@ -18,7 +18,7 @@
 }());
 
 (function($,P){
-    var detector = P.detector(),
+    var detector = P.detector,
         ltie8 = detector.browser === 'ie' && detector.version && detector.version < 9;  //小于等于ie8
     /**
      * 添加头标签
