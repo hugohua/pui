@@ -42,11 +42,11 @@ Pui.mix(Pui,{
             if(i === 'init'){
                 exports[i]();
             }else if(i === 'lazyInit'){
-                //1.5s后执行
+                //1s后执行
                 (function(i){
                     setTimeout(function(){
                         me[name][i]();
-                    },1500)
+                    },1000)
                 })(i);
             }else if(i === 'winLoad'){
                 //win load 后执行

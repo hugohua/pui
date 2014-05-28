@@ -2,8 +2,8 @@
  * PUI
  * @module
  */
-var Pui = {
-    version: '0.0.1'
+var Pui = window.Pui ={
+    version: '0.1.0'
 };
 
 Pui.mix = function(to, from) {
