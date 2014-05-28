@@ -8,7 +8,7 @@
  *
  * Licensed under MIT
  *
- * Released on: May 26, 2014
+ * Released on: May 28, 2014
 */
 
 (function(window){
@@ -26,8 +26,8 @@
         return
     }
 
-var Pui = {
-    version: '0.0.1'
+var Pui = window.Pui ={
+    version: '0.1.0'
 };
 
 Pui.mix = function(to, from) {
@@ -77,11 +77,11 @@ Pui.mix(Pui,{
             if(i === 'init'){
                 exports[i]();
             }else if(i === 'lazyInit'){
-                //1.5s后执行
+                //1s后执行
                 (function(i){
                     setTimeout(function(){
                         me[name][i]();
-                    },1500)
+                    },1000)
                 })(i);
             }else if(i === 'winLoad'){
                 //win load 后执行
@@ -1068,7 +1068,6 @@ Pui.bridge = function(name, object){
 
 };
 
-window.Pui = Pui;
 //添加CMD支持 for seajs
 if(typeof define === "function"){
     define(function(require, exports, module){
@@ -1077,4 +1076,4 @@ if(typeof define === "function"){
 }
 
 //this is window
-})(window,jQuery);
+})(window,jQuery,undefined);

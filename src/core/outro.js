@@ -7,4 +7,4 @@ if(typeof define === "function"){
 }
 
 //this is window
-})(window,jQuery);
+})(window,jQuery,undefined);
