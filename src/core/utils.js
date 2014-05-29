@@ -30,8 +30,8 @@ Pui.mix(Pui,{
         //name
         me[name] = me[name] || {};
         //将func里面的export参数抽取出来，用于合并到Pui命名空间上
-        //同时判断是否存在return值
-        returnVal = func(exports,me);
+        //同时判断是否存在return值,将jq传入
+        returnVal = func(exports,me,$);
         //判断返回值是否是对象
         if(returnVal && $.isPlainObject(returnVal)){
             $.extend(exports,returnVal);

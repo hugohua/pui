@@ -8,7 +8,7 @@
  *
  * Licensed under MIT
  *
- * Released on: May 28, 2014
+ * Released on: May 29, 2014
 */
 Pui.widget('pp.test',{
 
