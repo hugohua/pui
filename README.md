@@ -64,12 +64,12 @@ Pui.page.init();
 *  [add](https://github.com/baofen14787/pui/blob/master/docs/add.md) (模块定义方法)
 *  [tmpl](https://github.com/baofen14787/pui/blob/master/docs/temlate.md) (模板方法)
 *  [cookie](https://github.com/baofen14787/pui/blob/master/docs/cookie.md) (提供 cookie 操作方法)
-*  localstore (提供 localStorage 操作方法)
-*  supports (检测浏览器是否支持css属性)
-*  debounce (当该函数被调用，wait毫秒后才执行)
-*  throttle (无视一定时间内所有的调用)
-*  detector (客户端信息检测)
-*  loadAsset (懒加载容器内的资源文件(如：image、iframe))
+*  [localstore](https://github.com/baofen14787/pui/blob/master/docs/localstore.md) (提供 localStorage 操作方法)
+*  [supports](https://github.com/baofen14787/pui/blob/master/docs/utils.md#puisupportsname) (检测浏览器是否支持css属性)
+*  [throttle](https://github.com/baofen14787/pui/blob/master/docs/utils.md#puithrottlefuncwaitoptions) (无视一定时间内所有的调用)
+*  [debounce](https://github.com/baofen14787/pui/blob/master/docs/utils.md#puidebouncefuncwaitimmediate) (当该函数被调用，wait毫秒后才执行)
+*  [detector](https://github.com/baofen14787/pui/blob/master/docs/utils.md#puidetector) (客户端信息检测)
+*  [loadAsset](https://github.com/baofen14787/pui/blob/master/docs/utils.md#puiloadassetwarp) (懒加载容器内的资源文件(如：image、iframe))
 
 ###feekback
 如果您有任何关于PUI的问题，可以通过[git issue](https://github.com/baofen14787/pui/issues)给我反馈bug，我会尽快解决。
