@@ -1,4 +1,4 @@
-# Pui.cookie( name [, base ], prototype )
+# Pui.cookie
 
 ### API参考
 
@@ -54,7 +54,7 @@ URI 编码。
 ````
 
 
-### remove `Cookie.remove(name, [options])`
+### remove `Pui.cookie.remove(name, [options])`
 
 移除指定的 cookie.
 
