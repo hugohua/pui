@@ -1,6 +1,10 @@
 #PUI
 
-PUI是拍拍前端的UI组件框架，用于实现页面上的交互效果。
+PUI是拍拍前端的UI组件框架，用于实现页面上的交互效果，同时提供了常用的方法集，用于方便页面上的常用操作。
+
+Pui的核心代码参考了[jquery ui widget](http://jqueryui.com/widget/) 、 [GMU](http://gmu.baidu.com/) 、[underscore](http://underscorejs.org/) 、[aralejs](http://aralejs.org/) 的实现方式。在此感谢上述几个框架大牛们！
+
+
 
 ##why use PUI
 
