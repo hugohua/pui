@@ -80,8 +80,8 @@
 
             fade: function(index){
                 var curIdx = this.index;
-                this.slides.eq(curIdx).stop().css('z-index', 0).animate({opacity: 0}, this.speed);
-                this.slides.eq(index).stop().css('z-index', 1).animate({opacity: 1}, this.speed);
+                this.slides.eq(curIdx).stop().css('z-index', 0).addClass(this.options.curCls).animate({opacity: 0}, this.speed);
+                this.slides.eq(index).stop().css('z-index', 1).removeClass(this.options.curCls).animate({opacity: 1}, this.speed);
             },
 
             scrollX: function(index){
